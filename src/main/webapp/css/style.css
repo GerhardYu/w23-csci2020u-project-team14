@@ -1,0 +1,140 @@
+/* Fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+    /* Variables for coloring */
+    --OTUBlue: #003C71;
+    --OTUOrange: #E75D2A;
+
+    font-family: 'Nunito', sans-serif;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+h2 span {
+    border-bottom: var(--OTUOrange) 3px solid;
+    border-radius: 10px;
+}
+
+.table
+{
+  width:100%;
+}
+
+.table th
+{
+  text-align:center;
+}
+
+.table td
+{
+  text-align:center;
+}
+
+.form-control
+{
+  border-color: black;
+}
+
+#enter_room_name_button
+{
+    margin-left: 10px;
+}
+
+#room-code
+{
+    height: 40px;
+}
+
+.btn
+{
+    color: white;
+    background-color: var(--OTUBlue);
+    margin-bottom:10px;
+}
+
+.navbar {
+    background-color: var(--OTUBlue);
+    padding-left: 15px;
+    padding-bottom: 15px;
+    border-bottom: var(--OTUOrange) 5px solid;
+}
+
+.navbar-brand {
+    color: var(--OTUOrange);
+}
+
+.navbar-brand:hover {
+    color: white;
+}
+
+.nav-item {
+    color: white;
+}
+
+.nav-item:hover {
+    color: var(--OTUOrange);
+}
+
+#dashboard_section, #about_section {
+    padding: 20px;
+}
+
+.room-list {
+    height: 100%;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+.chat-box {
+    height: 100%;
+}
+
+.about_avatar {
+    width: 150px;
+}
+
+.btn-outline-secondary {
+    color: white;
+    background-color: var(--OTUBlue);
+}
+
+.centered_home {
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--OTUBlue);
+    color: white;
+    padding: 50px;
+    width: 50%;
+    border-radius: 15px;
+}
+
+.centered_home img {
+    width: 250px;
+}
+
+.centered_home .btn {
+    background-color: var(--OTUOrange);
+    color: white;
+    border: var(--OTUBlue) 1px solid;
+}
+
+.centered_home p {
+    margin-bottom: 50px;
+}
+
+footer {
+    background-color: var(--OTUBlue);
+    color: white;
+    border-top: var(--OTUOrange) 5px solid;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer span {
+    color: var(--OTUOrange);
+}
