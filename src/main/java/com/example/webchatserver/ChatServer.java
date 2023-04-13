@@ -126,6 +126,7 @@ public class ChatServer {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
                     if(message == currentWord){
                         peer.getBasicRemote().sendText(username + "got it right +1 point");
+                        peer.getBasicRemote().sendText("Correct word is " +  currentWord);
                         point++;
                     }
                     else{
