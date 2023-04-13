@@ -21,13 +21,13 @@ import static com.example.util.ResourceAPI.saveChatRoomHistory;
 public class Word{
     private static Map<String, String> wordList = new HashMap<>();
     private int randNum = 0;
-    private int wordCount = 1;
+    private int wordCount = 0;
     private int generateWordCount = 0;
-    public String randomWord;
-    public String randomDefinition;
+    private String randomWord;
+    private String randomDefinition;
 
 
-    public void setWordList(){
+    public Map<String, String> setWordList(){
         wordList.put("jovial", "cheerful and friendly");
         wordList.put("puppy", "a baby dog");
         wordList.put("absurd", "unreasonable or illogical");
@@ -38,26 +38,40 @@ public class Word{
         wordList.put("blizzard", "a severe snowstorm with high winds and low visibility");
         wordList.put("awkward", "causing difficulty / hard to do or deal with");
         wordList.put("stronghold", "a fortified place");
+        return wordList;
     }
-    public void countWords(){
-        for(String word : wordList.values()){
+    public int countWords(Map<String, String> currentList){
+        for(String word : currentList.values()){
             wordCount++;
         }
+        return wordCount;
     }
-    public void generateNumber(){
+    public int generateNumber(int count){
         Random random = new Random();
-        randNum = random.nextInt(wordCount);
+        randNum = random.nextInt(count+1);
+        return randNum;
     }
 
-    public void generateWord(){
+    public String generateWord(Map<String, String> currentList, int randomNum){
         int count = 0;
-        for(Entry<String, String> word: wordList.entrySet()){
-            if(count == randNum){
-                randomWord = word.getKey();
+        for(Entry<String, String> word: currentList.entrySet()){
+            if(count == randomNum){
+               randomWord = word.getKey();
+            }
+            count++;
+        }
+        return randomWord;
+    }
+
+    public String generateDefinition(Map<String, String> currentList, int randomNum){
+        int count = 0;
+        for(Entry<String, String> word: currentList.entrySet()){
+            if(count == randomNum){
                 randomDefinition = word.getValue();
             }
             count++;
         }
+        return randomDefinition;
     }
 
 

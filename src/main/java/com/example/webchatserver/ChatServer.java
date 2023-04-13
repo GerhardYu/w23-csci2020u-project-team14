@@ -14,6 +14,7 @@ import java.util.Set;
 
 import static com.example.util.ResourceAPI.loadChatRoomHistory;
 import static com.example.util.ResourceAPI.saveChatRoomHistory;
+import com.example.webchatserver.Word;
 
 /**
  * This class represents a web socket server, a new connection is created and it receives a roomID as a parameter
@@ -27,6 +28,15 @@ public class ChatServer {
     private Map<String, String> usernames = new HashMap<String, String>();
     private static Map<String, String> roomList = new HashMap<String, String>();
     private static Map<String, String> roomHistoryList = new HashMap<String, String>();
+
+    private int point = 0; //points for getting a word right
+    private Word randomWordList =  new Word(); //makes word class
+    private Map<String, String> wordList = randomWordList.setWordList(); //initialize words
+    private Integer wordCount = randomWordList.countWords(wordList); //counts words
+    private Integer randomNum = randomWordList.generateNumber(wordCount); //generate a random number
+    private String currentWord = randomWordList.generateWord(wordList, randomNum); //get a random word based from the number randomly generated
+    private String currentDefinition = randomWordList.generateDefinition(wordList, randomNum); //gets the words definition
+
 
     // getter for roomList
     public Map<String, String> getRoomList()
@@ -102,16 +112,25 @@ public class ChatServer {
         if(usernames.containsKey(userID)){ // not their first message
             String username = usernames.get(userID);
             System.out.println(username);
+            message = message.toLowerCase();
 
             // adding event to the history of the room
             String logHistory = roomHistoryList.get(roomID);
             roomHistoryList.put(roomID, logHistory+" \\n " +"(" + username + "): " + message);
 
+
             // broadcasting it to peers in the same room
             for(Session peer: session.getOpenSessions()){
                 // only send my messages to those in the same room
-                if(roomList.get(peer.getId()).equals(roomID)) {
+                if (roomList.get(peer.getId()).equals(roomID)) {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
+                    if(message == currentWord){
+                        peer.getBasicRemote().sendText(username + "got it right +1 point");
+                        point++;
+                    }
+                    else{
+                        peer.getBasicRemote().sendText("The word inputted by " + username + " is wrong");
+                    }
                 }
             }
         }else{ //first message is their username
