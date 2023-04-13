@@ -3,10 +3,14 @@
 
 * {
     /* Variables for coloring */
-    --OTUBlue: #003C71;
-    --OTUOrange: #E75D2A;
+    --darkBlue: #0A192F;
+    --lightBlue: #66FCF1;
+    --betterGrey: #e5e7eb;
+    --betterBlack: #040C16;
 
     font-family: 'Nunito', sans-serif;
+    color: var(--betterGrey);
+    background-color: var(--darkBlue);
 }
 
 h2 {
@@ -14,8 +18,17 @@ h2 {
 }
 
 h2 span {
-    border-bottom: var(--OTUOrange) 3px solid;
-    border-radius: 10px;
+    border-bottom: var(--betterGrey) 2px solid;
+    border-radius: 7px;
+}
+
+.main-section {
+    background-color: var(--darkBlue);
+}
+
+#word-blanks {
+    color: var(--lightBlue);
+    padding: 25px;
 }
 
 .table
@@ -51,19 +64,18 @@ h2 span {
 .btn
 {
     color: white;
-    background-color: var(--OTUBlue);
+    background-color: var(--darkBlue);
     margin-bottom:10px;
 }
 
 .navbar {
-    background-color: var(--OTUBlue);
     padding-left: 15px;
     padding-bottom: 15px;
-    border-bottom: var(--OTUOrange) 5px solid;
+    border-bottom: var(--lightBlue) 5px solid;
 }
 
 .navbar-brand {
-    color: var(--OTUOrange);
+    color: var(--lightBlue);
 }
 
 .navbar-brand:hover {
@@ -75,36 +87,38 @@ h2 span {
 }
 
 .nav-item:hover {
-    color: var(--OTUOrange);
+    color: var(--lightBlue);
 }
 
-#dashboard_section, #about_section {
+#about_section {
     padding: 20px;
-}
-
-.room-list {
-    height: 100%;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-.chat-box {
-    height: 100%;
 }
 
 .about_avatar {
     width: 150px;
 }
 
+.about-card {
+    background-color: var(--betterGrey);
+}
+
 .btn-outline-secondary {
     color: white;
-    background-color: var(--OTUBlue);
+}
+
+.home-container {
+    background-color: var(--darkBlue);
+}
+
+.centered_home, .centered_home img, .centered_home h1, .centered_home p{
+    background-color: var(--betterGrey);
+    color: var(--darkBlue);
 }
 
 .centered_home {
     margin-top: 150px;
     margin-left: auto;
     margin-right: auto;
-    background-color: var(--OTUBlue);
     color: white;
     padding: 50px;
     width: 50%;
@@ -116,9 +130,9 @@ h2 span {
 }
 
 .centered_home .btn {
-    background-color: var(--OTUOrange);
-    color: white;
-    border: var(--OTUBlue) 1px solid;
+    background-color: var(--darkBlue);
+    color: var(--lightBlue);
+    border: var(--darkBlue) 1px solid;
 }
 
 .centered_home p {
@@ -126,9 +140,9 @@ h2 span {
 }
 
 footer {
-    background-color: var(--OTUBlue);
+    background-color: var(--darkBlue);
     color: white;
-    border-top: var(--OTUOrange) 5px solid;
+    border-top: var(--lightBlue) 5px solid;
 
     position: fixed;
     bottom: 0;
@@ -136,5 +150,5 @@ footer {
 }
 
 footer span {
-    color: var(--OTUOrange);
+    color: var(--lightBlue);
 }

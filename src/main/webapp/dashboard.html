@@ -31,9 +31,9 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="index.html">
                     <img src="./img/ChatServerLogo.png" width="30" height="30" alt="">
-                    <strong>Chat Server</strong>
+                    Wordplay Showdown!
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,51 +53,43 @@
             </div>
         </nav>
 
-        <!-- Room/Chat Section -->
-        <div id="dashboard_section">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- Available Rooms -->
-                    <div class="col-md-3">
-                        <h2><span>Rooms</span></h2>
-
-        <!--                buttons to refresh,create,join room-->
-                        <button type="button" class="btn btn-outline-primary" id="refresh_room">Refresh Rooms</button>
+        <!-- Main Game Content -->
+        <div class="main-section">
+            <div class="container-fluid pt-4">
+                <div class="row text-center">
+                    <!-- Left side -->
+                    <div class="col-lg-4">
+                        <h2>Guess the following word:</h2>
+                        <h3 id="word-blanks">_ _ _ _ _</h3>
+                        <p>Hint: a baby dog</p>
                         <br>
-                        <button type="button" class="btn btn-outline-primary" id="create_room" onclick="newRoom()">Create Room</button>
+                        <hr>
                         <br>
-                        <button type="button" class="btn btn-outline-primary" id="join_room">Join Room</button>
-
-        <!--                user enter room id then click join room button to join an existing room-->
-                        <input type="text" class="form-control" placeholder="Enter room ID" id="join_room_input">
-
-        <!--                table display current existing rooms-->
-                        <div style="height: 200px; overflow-y: scroll">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Room ID</th>
-                                    <th>Number of users</th>
-                                </tr>
-                                </thead>
-                                <tbody id="room_list">
-                                </tbody>
-                            </table>
+                        <div id="scoreboard">
+                            <h2><span>Scoreboard</span></h2>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p id="player-one-name">Player 1: GerGer</p>
+                                    <p id="player-two-name">Player 2: Patching</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p id="player-one-score">Wins: 5</p>
+                                    <p id="player-two-score">Wins: 5</p>
+                                </div>
+                            </div>
                         </div>
-                        <br>
                     </div>
 
-
                     <!-- Chat Box -->
-                    <div class="col-md-9">
+                    <div class="col-lg-8">
                         <h2><span>Chat</span> <span id="chat_room_title"></span></h2>
                         <div class="card h-70">
                             <div class="card-body">
                                 <div class="chat-box" id="chat_box">
                                     <textarea title="Chat Log" id="log" readonly style="display: block; width: 100%; height: 400px; resize: none; margin: 0; padding: 0; border: 0;"></textarea>
                                     <br>
-                                    <input type="text" class="form-control" id="input" placeholder="Enter message">
-                                    </div>
+                                    <input type="text" class="form-control" id="input" placeholder="Enter your guess">
                                 </div>
                             </div>
                         </div>
@@ -105,6 +97,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <!-- Footer -->
         <footer class="text-center text-lg-start">
