@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static com.example.util.ResourceAPI.loadChatRoomHistory;
-import static com.example.util.ResourceAPI.saveChatRoomHistory;
 import com.example.webchatserver.Word;
 
 /**
