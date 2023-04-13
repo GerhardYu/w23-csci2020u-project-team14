@@ -130,6 +130,7 @@ public class ChatServer {
                     }
                     else{
                         peer.getBasicRemote().sendText("The word inputted by " + username + " is wrong");
+                        peer.getBasicRemote().sendText("Please try again");
                     }
                 }
             }
