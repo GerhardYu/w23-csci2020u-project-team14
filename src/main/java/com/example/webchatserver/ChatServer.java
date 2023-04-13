@@ -27,7 +27,6 @@ public class ChatServer {
     // you may add other attributes as you see fit
     private Map<String, String> usernames = new HashMap<String, String>();
     private static Map<String, String> roomList = new HashMap<String, String>();
-    private static Map<String, String> roomHistoryList = new HashMap<String, String>();
 
     private int point = 0; //points for getting a word right
     private Word randomWordList =  new Word(); //makes word class
@@ -45,27 +44,11 @@ public class ChatServer {
     }
 
     // getter for roomHistoryList
-    public Map<String, String> getRoomHistoryList()
-    {
-        return roomHistoryList;
-    }
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
         roomList.put(session.getId(), roomID); //adding userID to a room
-        String history = loadChatRoomHistory(roomID);
         System.out.println("Room joined ");
-
-        if (history != null && !(history.isBlank())) {
-            System.out.println(history);
-            history = history.replaceAll(System.lineSeparator(), "\\\n");
-            System.out.println(history);
-            session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"" + history + " \\n Chat room history loaded\"}");
-            roomHistoryList.put(roomID, history + " \\n " + roomID + " room resumed.");
-        }
-        if (!roomHistoryList.containsKey(roomID)) { // only if this room has no history yet
-            roomHistoryList.put(roomID, roomID + " room Created."); //initiating the room history
-        }
 
         session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome to the chat room. Please state your username to begin.\"}");
     }
@@ -81,9 +64,6 @@ public class ChatServer {
             // remove this user from the roomList
             roomList.remove(session.getId());
 
-            // adding event to the history of the room
-            String logHistory = roomHistoryList.get(roomID);
-            roomHistoryList.put(roomID, logHistory+" \\n " + username + " left the chat room.");
 
             // broadcasting it to peers in the same room
             int countPeers = 0;
@@ -92,11 +72,6 @@ public class ChatServer {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + username + " left the chat room.\"}");
                     countPeers++; // count how many peers are left in the room
                 }
-            }
-
-            // if everyone in the room left, save history
-            if(!(countPeers >0)){
-                saveChatRoomHistory(roomID, roomHistoryList.get(roomID));
             }
         }
     }
@@ -113,10 +88,6 @@ public class ChatServer {
             String username = usernames.get(userID);
             System.out.println(username);
             message = message.toLowerCase();
-
-            // adding event to the history of the room
-            String logHistory = roomHistoryList.get(roomID);
-            roomHistoryList.put(roomID, logHistory+" \\n " +"(" + username + "): " + message);
 
 
             // broadcasting it to peers in the same room
@@ -138,10 +109,6 @@ public class ChatServer {
         }else{ //first message is their username
             usernames.put(userID, message);
             session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "!\"}");
-
-            // adding event to the history of the room
-            String logHistory = roomHistoryList.get(roomID);
-            roomHistoryList.put(roomID, logHistory+" \\n " + message + " joined the chat room.");
 
             // broadcasting it to peers in the same room
             for(Session peer: session.getOpenSessions()){
