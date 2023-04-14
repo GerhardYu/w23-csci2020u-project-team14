@@ -231,3 +231,9 @@ $("#join_room").click(function(){
         }
     }
 });
+
+// Makes the READY button disappear when it's pressed, and brings in the input box
+$('#ready-button').click(function(){
+    $('#input').removeClass('d-none');
+    $('#ready-button').addClass('d-none');
+});
