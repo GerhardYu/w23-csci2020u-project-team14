@@ -7,6 +7,7 @@ import jakarta.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,9 +46,7 @@ public class GameServer {
 
         System.out.println("Room joined ");
 
-        System.out.println(roomID);
-
-        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome to the chat room. Please state your username to begin.\"}");
+//        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome to the chat room. Please state your username to begin.\"}");
     }
 
     @OnClose
@@ -81,7 +80,7 @@ public class GameServer {
         String type = (String) jsonmsg.get("type");
         String message = (String) jsonmsg.get("msg");
 
-        System.out.println("current msg = " + message);
+
 
         if(usernames.containsKey(userID)){ // not their first message
             String username = usernames.get(userID);
@@ -108,9 +107,13 @@ public class GameServer {
             }
         }else{ //first message is their username
             usernames.put(userID, message);
-            String joinStr = "join";
-            int index = message.indexOf("join") - joinStr.length();
-            session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "!\"}");
+
+            //
+            if (Collections.frequency(roomList.values(), roomID) == 1) {
+                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Please wait for another play and click ready to play.\"}");
+            } else {
+                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Click ready to play\"}");
+            }
 
             // broadcasting it to peers in the same room
             for(Session peer: session.getOpenSessions()){
