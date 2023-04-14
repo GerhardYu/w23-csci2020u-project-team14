@@ -23,7 +23,6 @@ public class GameServer {
     private Map<String, String> usernames = new HashMap<String, String>();
     private static Map<String, String> roomList = new HashMap<String, String>();
 
-    private int point = 0; //points for getting a word right
     private Word randomWordList =  new Word(); //makes word class
     private Map<String, String> wordList = randomWordList.setWordList(); //initialize words
     private Integer wordCount = randomWordList.countWords(wordList); //counts words
@@ -95,9 +94,13 @@ public class GameServer {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
 
                     if(message.equals(currentWord)){
-                        peer.getBasicRemote().sendText(username + "got it right +1 point");
+                        peer.getBasicRemote().sendText("Congratulations " + username + " you got it right!!!");
                         peer.getBasicRemote().sendText("Correct word is " +  currentWord);
-                        point++;
+                        peer.getBasicRemote().sendText("A new word will now be generated.");
+                        randomNum = randomWordList.generateNumber(wordCount);
+                        currentWord = randomWordList.generateWord(wordList, randomNum);
+                        currentDefinition = randomWordList.generateDefinition(wordList, randomNum);
+
                     }
                     else{
                         peer.getBasicRemote().sendText("The word inputted by " + username + " is wrong");
