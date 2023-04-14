@@ -81,6 +81,8 @@ public class GameServer {
         String type = (String) jsonmsg.get("type");
         String message = (String) jsonmsg.get("msg");
 
+        System.out.println("current msg = " + message);
+
         if(usernames.containsKey(userID)){ // not their first message
             String username = usernames.get(userID);
             System.out.println(username);

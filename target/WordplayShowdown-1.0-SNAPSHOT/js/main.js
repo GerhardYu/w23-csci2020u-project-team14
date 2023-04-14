@@ -40,6 +40,11 @@ function enterRoom(){
     ws = new WebSocket("ws://localhost:8080/WordplayShowdown-1.0-SNAPSHOT/ws/"+code);
 
     console.log("here");
+    ws.onopen = function (event) {
+        let username = document.getElementById("username").value;
+        let request = {"type":"chat", "msg":username};
+        ws.send(JSON.stringify(request));
+    };
 
     // parse messages received from the server and update the UI accordingly
     ws.onmessage = function (event) {
@@ -81,5 +86,12 @@ $("#enterRequestButton").click(function(){
 
     let footer = document.getElementById("footer");
     footer.style.display = "block";
+
+});
+
+// Makes the READY button disappear when it's pressed, and brings in the input box
+$('#ready-button').click(function(){
+    $('#input').removeClass('d-none');
+    $('#ready-button').addClass('d-none');
 
 });

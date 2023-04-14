@@ -40,6 +40,11 @@ function enterRoom(){
     ws = new WebSocket("ws://localhost:8080/WordplayShowdown-1.0-SNAPSHOT/ws/"+code);
 
     console.log("here");
+    ws.onopen = function (event) {
+        let username = document.getElementById("username").value;
+        let request = {"type":"chat", "msg":username};
+        ws.send(JSON.stringify(request));
+    };
 
     // parse messages received from the server and update the UI accordingly
     ws.onmessage = function (event) {
@@ -50,8 +55,6 @@ function enterRoom(){
         // handle message
 
         }
-    let username = document.getElementById("username").value;
-    ws.send(JSON.stringify(username));
 
     return true;
 }
@@ -84,49 +87,11 @@ $("#enterRequestButton").click(function(){
     let footer = document.getElementById("footer");
     footer.style.display = "block";
 
-<<<<<<< HEAD
-    // get joined room title
-    let displayJoinedRoomID = document.getElementById("chat_room_title").innerHTML;
-
-    // get input field room id
-    let roomID = document.getElementById("join_room_input").value;
-
-    // display alert if user wants to join the same room that user already in
-    if(displayJoinedRoomID == roomID)
-    {
-        alert("You are currently in room " + roomID + " !");
-    }
-    // else user join another existing room
-    else
-    {
-        // get existing rooms from tbody
-        let tbody = document.querySelector("#room_list");
-        let currentRooms = [];
-        // loop through the tr elements in the tbody
-        tbody.querySelectorAll("tr").forEach((tr) => {
-            // get the value of the first td element in the tr
-            let currentRoomID = tr.querySelector("td:first-child").textContent;
-            currentRooms.push(currentRoomID);
-        });
-
-        // join if input field room id is not empty, and roomID exist
-        if(roomID.value != "") //currentRooms.includes(roomID)
-        {
-            // clear previous chat log
-            document.getElementById("log").value = "";
-            enterRoom(roomID);
-        }
-        else
-        {
-            alert("Room " + roomID + " not exist!")
-        }
-    }
 });
 
 // Makes the READY button disappear when it's pressed, and brings in the input box
 $('#ready-button').click(function(){
     $('#input').removeClass('d-none');
     $('#ready-button').addClass('d-none');
-=======
->>>>>>> cfa45af53015f4661abb7699fca36e235f268081
+
 });
