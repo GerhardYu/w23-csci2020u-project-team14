@@ -50,6 +50,8 @@ function enterRoom(){
         // handle message
 
         }
+    let username = document.getElementById("username").value;
+    ws.send(JSON.stringify(username));
 
     return true;
 }

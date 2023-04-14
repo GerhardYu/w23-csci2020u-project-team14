@@ -42,7 +42,7 @@ public class GameServer {
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
         roomList.put(session.getId(), roomID); //adding userID to a room
-        
+
         System.out.println("Room joined ");
 
         System.out.println(roomID);
@@ -92,7 +92,8 @@ public class GameServer {
                 // only send my messages to those in the same room
                 if (roomList.get(peer.getId()).equals(roomID)) {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
-                    if(message == currentWord){
+
+                    if(message.equals(currentWord)){
                         peer.getBasicRemote().sendText(username + "got it right +1 point");
                         peer.getBasicRemote().sendText("Correct word is " +  currentWord);
                         point++;
@@ -105,6 +106,8 @@ public class GameServer {
             }
         }else{ //first message is their username
             usernames.put(userID, message);
+            String joinStr = "join";
+            int index = message.indexOf("join") - joinStr.length();
             session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "!\"}");
 
             // broadcasting it to peers in the same room
