@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>WSChatServer</artifactId>
+    <artifactId>WordplayShowdown</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>WSChatServer</name>
+    <name>WordplayShowdown</name>
     <packaging>war</packaging>
 
     <properties>

@@ -1,9 +1,9 @@
 let ws;
 
-// Receive random word for each game
+// Receive random room ID and establish connect
 // function newRoom(){
-//     // calling the WordplayShowdown to retrieve a new word
-//     let callURL= "http://localhost:8080/WordplayShowdown-1.0-SNAPSHOT/chat-servlet";
+//     // calling the ChatServlet to retrieve a new room ID
+//     let callURL= "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet";
 //     fetch(callURL, {
 //         method: 'GET',
 //         headers: {
@@ -12,13 +12,17 @@ let ws;
 //     })
 //         .then(response => response.text())
 //         .then(function(response){
-//             console.log("new word: " + response)
-//
+//             console.log("enter room: " + response)
+
 //             // parse string to list
 //             let roomArray = response.replace(/\r\n/g, "").split(",");
-//
-//
-//
+
+//             // generate room list table
+//             roomList(roomArray[0], 1);
+
+//             // establish connection
+//             enterRoom(roomArray[0]);
+
 //         }); //enterRoom(response)// enter the room with the code
 // }
 
@@ -59,9 +63,13 @@ function enterRoom(){
 document.getElementById("input").addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         let request = {"type":"chat", "msg":event.target.value};
+        console.log(event.target.value);
+        console.log(request);
         ws.send(JSON.stringify(request));
         event.target.value = "";
 
+        // refresh room table
+        refreshRooms();
     }
 });
 
