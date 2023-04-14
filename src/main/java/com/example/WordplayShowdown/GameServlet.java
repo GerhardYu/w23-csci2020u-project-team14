@@ -1,4 +1,4 @@
-package com.example.webchatserver;
+package com.example.WordplayShowdown;
 
 import java.io.*;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.RandomStringUtils;
  * This is a class that has services
  * In our case, we are using this to generate unique room IDs**/
 @WebServlet(name = "chatServlet", value = "/chat-servlet")
-public class ChatServlet extends HttpServlet {
+public class GameServlet extends HttpServlet {
 
 
     private String message;
@@ -38,13 +38,12 @@ public class ChatServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ChatServer parsingRoomList = new ChatServer();
+        GameServer parsingRoomList = new GameServer();
+
 
         Map<String, String> roomList = parsingRoomList.getRoomList();
-        Map<String, String> historyList = parsingRoomList.getRoomHistoryList();
 
         Set<String> roomKeys = roomList.keySet();
-        Set<String> historyKeys = historyList.keySet();
 
         response.setContentType("text/plain");
         // send the random code as the response's content
@@ -52,19 +51,14 @@ public class ChatServlet extends HttpServlet {
         // get all existing rooms
         String room = "";
 
-        // get all history rooms: rooms with chat history, and current user is 0
-        String history = ",history";
-
         for(String key: roomKeys){
             room += "," + roomList.get(key);
         }
-        for(String key: historyKeys){
-            history += "," + key;
-        }
+
 
         PrintWriter out = response.getWriter();
         // sends random roomID + previous created rooms + rooms with history chat log
-        out.println(generatingRandomUpperAlphanumericString(5) + room + history);
+        out.println("");
 
     }
 

@@ -68,16 +68,6 @@ h2 span {
     margin-bottom:10px;
 }
 
-#ready-button {
-    border: 2px solid var(--lightBlue);
-}
-
-#ready-button:hover {
-    background-color: var(--lightBlue);
-    color: var(--darkBlue);
-    border: 2px solid var(--lightBlue);
-}
-
 .navbar {
     padding-left: 15px;
     padding-bottom: 15px;

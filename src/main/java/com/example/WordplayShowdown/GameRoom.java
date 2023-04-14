@@ -1,15 +1,13 @@
-package com.example.webchatserver;
+package com.example.WordplayShowdown;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * This class represents the data you may need to store about a Chat room
  * You may add more method or attributes as needed
  * **/
-public class ChatRoom {
+public class GameRoom {
 
     private String  code;
 
@@ -17,7 +15,7 @@ public class ChatRoom {
     private Map<String, String> users = new HashMap<String, String>() ;
 
     // when created the chat room has at least one user
-    public ChatRoom(String code, String user){
+    public GameRoom(String code, String user){
         this.code = code;
         // when created the user has not entered their username yet
         this.users.put(user, "");

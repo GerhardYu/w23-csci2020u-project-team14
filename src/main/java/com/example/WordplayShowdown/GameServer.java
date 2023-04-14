@@ -1,4 +1,4 @@
-package com.example.webchatserver;
+package com.example.WordplayShowdown;
 
 
 import jakarta.websocket.*;
@@ -7,18 +7,14 @@ import jakarta.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import com.example.webchatserver.Word;
 
 /**
  * This class represents a web socket server, a new connection is created and it receives a roomID as a parameter
  * **/
 @ServerEndpoint(value="/ws/{roomID}")
-public class ChatServer {
+public class GameServer {
 
     // contains a static List of ChatRoom used to control the existing rooms and their users
 
@@ -46,7 +42,10 @@ public class ChatServer {
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
         roomList.put(session.getId(), roomID); //adding userID to a room
+        
         System.out.println("Room joined ");
+
+        System.out.println(roomID);
 
         session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome to the chat room. Please state your username to begin.\"}");
     }
