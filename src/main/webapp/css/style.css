@@ -124,7 +124,6 @@ h2 span {
 .centered_home, .centered_home img, .centered_home h1, .centered_home p{
     background-color: var(--betterGrey);
     color: var(--darkBlue);
-
 }
 
 .centered_home {

@@ -250,5 +250,4 @@ $("#enterRequestButton").click(function(){
 $('#ready-button').click(function(){
     $('#input').removeClass('d-none');
     $('#ready-button').addClass('d-none');
-
 });
