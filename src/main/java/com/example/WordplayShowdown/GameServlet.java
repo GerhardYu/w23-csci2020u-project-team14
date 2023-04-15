@@ -8,6 +8,7 @@ import java.util.Set;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.json.JSONObject;
 
 /**
  * This is a class that has services
@@ -38,27 +39,30 @@ public class GameServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        GameServer parsingRoomList = new GameServer();
+        GameServer game = new GameServer();
 
 
-        Map<String, String> roomList = parsingRoomList.getRoomList();
+        Map<String, String> players = game.getRoomPlayers();
+        //Map<String, String> status = game.getOutputUserStatus();
 
-        Set<String> roomKeys = roomList.keySet();
 
-        response.setContentType("text/plain");
-        // send the random code as the response's content
+        JSONObject jsonPlayers = new JSONObject(players);
 
-        // get all existing rooms
-        String room = "";
-
-        for(String key: roomKeys){
-            room += "," + roomList.get(key);
-        }
-
+        response.setContentType("application/json");
+        // send the players as the response's content
 
         PrintWriter out = response.getWriter();
+
+        System.out.println("here players before json");
+        for (Map.Entry<String, String> entry : players.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
+
+        System.out.println("here players");
+        System.out.println(jsonPlayers);
+
         // sends random roomID + previous created rooms + rooms with history chat log
-        out.println("");
+        out.println(jsonPlayers);
 
     }
 

@@ -40,10 +40,7 @@
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" placeholder="Enter username">
               </div>
-          
               <br>
-              
-          
               <button class="btn btn-outline-secondary btn-lg btn-block mb-3" onclick="return enterRoom()" id="enterRequestButton">Play</button>
             </div>
           </div>
@@ -80,23 +77,28 @@
                     <div class="row text-center">
                         <!-- Left side -->
                         <div class="col-lg-4">
-                            <h2>Guess the following word:</h2>
-                            <h3 id="word-blanks">_ _ _ _ _</h3>
-                            <p>Hint: a baby dog</p>
+                            <div id="not_gameStart">
+                                <h2>Wordplay !</h2>
+                            </div>
+                            <div id="gameStart">
+                                <h2>Guess the following word:</h2>
+                                <h3 id="word-blanks">_ _ _ _ _</h3>
+                                <p id="hint">Hint: a baby dog</p>
+                            </div>
                             <br>
                             <hr>
                             <br>
-                            <div id="scoreboard">
-                                <h2><span>Scoreboard</span></h2>
+                            <div id="Players">
+                                <h2><span>Players</span></h2>
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <p id="player-one-name">Player 1: GerGer</p>
-                                        <p id="player-two-name">Player 2: Patching</p>
+                                        <p id="player-one-name" title="Player 1">Player 1: </p>
+                                        <p id="player-two-name" title="Player 2">Player 2: </p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p id="player-one-score">Wins: 5</p>
-                                        <p id="player-two-score">Wins: 5</p>
+                                        <p id="player-one-status">Status: Not ready</p>
+                                        <p id="player-two-status">Status: Not ready</p>
                                     </div>
                                 </div>
                             </div>

@@ -189,3 +189,45 @@ footer span {
 {
     display:none;
 }
+
+/*#Players p */
+/*{*/
+/*    text-align: center;*/
+/*    white-space: nowrap; */
+/*    !*margin-left: 20px;*!*/
+/*}*/
+
+#player-one-name
+{
+    text-align: left;
+    white-space: nowrap;
+    margin-left:30px;
+}
+
+#player-two-name
+{
+    text-align: left;
+    white-space: nowrap;
+    margin-left:30px;
+}
+
+#player-one-status
+{
+    text-align: center;
+    white-space: nowrap;
+}
+#player-two-status
+{
+    text-align: center;
+    white-space: nowrap;
+}
+
+#not_gameStart
+{
+    margin-top:50px;
+}
+
+#gameStart
+{
+    display:none;
+}

@@ -21,15 +21,22 @@ public class GameServer {
 
     // you may add other attributes as you see fit
     private Map<String, String> usernames = new HashMap<String, String>();
+    private Map<String, String> userStatus = new HashMap<String, String>();
+
     private static Map<String, String> roomList = new HashMap<String, String>();
+    private static Map<String, String> roomPlayers = new HashMap<String, String>();
+    private static Map<String, String> outputUserStatus = new HashMap<String, String>();
 
-    private Word randomWordList =  new Word(); //makes word class
-    private Map<String, String> wordList = randomWordList.setWordList(); //initialize words
-    private Integer wordCount = randomWordList.countWords(wordList); //counts words
-    private Integer randomNum = randomWordList.generateNumber(wordCount); //generate a random number
-    private String currentWord = randomWordList.generateWord(wordList, randomNum); //get a random word based from the number randomly generated
-    private String currentDefinition = randomWordList.generateDefinition(wordList, randomNum); //gets the words definition
+    private static Map<String, String> word = new HashMap<String, String>();
 
+    private static Word randomWordList =  new Word(); //makes word class
+    private static Map<String, String> wordList = randomWordList.setWordList(); //initialize words
+    private static Integer randomNum = randomWordList.generateNumber(10); //generate a random number
+    private static String currentWord = randomWordList.generateWord(wordList, randomNum); //get a random word based from the number randomly generated
+    private static String currentDefinition = randomWordList.generateDefinition(wordList, randomNum); //gets the words definition
+
+    private static boolean condition = false;
+//
 
     // getter for roomList
     public Map<String, String> getRoomList()
@@ -37,15 +44,28 @@ public class GameServer {
         return roomList;
     }
 
-    // getter for roomHistoryList
+    // getter roomPlayers
+    public Map<String, String> getRoomPlayers()
+    {
+        return roomPlayers;
+    }
+
+    // getter for outputUserStatus
+    public Map<String, String> getOutputUserStatus()
+    {
+        return outputUserStatus;
+    }
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
         roomList.put(session.getId(), roomID); //adding userID to a room
 
         System.out.println("Room joined ");
+        String wd = randomWordList.generateWord(wordList, randomNum);
+        //word.put(currentWord, currentDefinition);
 
-//        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome to the chat room. Please state your username to begin.\"}");
+
+        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
     }
 
     @OnClose
@@ -64,7 +84,7 @@ public class GameServer {
             int countPeers = 0;
             for (Session peer : session.getOpenSessions()){ //broadcast this person left the server
                 if(roomList.get(peer.getId()).equals(roomID)) { // broadcast only to those in the same room
-                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + username + " left the chat room.\"}");
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + username + " left the game.\"}");
                     countPeers++; // count how many peers are left in the room
                 }
             }
@@ -80,9 +100,11 @@ public class GameServer {
         String message = (String) jsonmsg.get("msg");
 
 
+        System.out.println("current user = " + userID);
 
-        if(usernames.containsKey(userID)){ // not their first message
+        if(usernames.containsKey(userID) && userStatus.get(userID).contains("ready")){ // not their first message
             String username = usernames.get(userID);
+            System.out.println("username = ");
             System.out.println(username);
             message = message.toLowerCase();
 
@@ -94,35 +116,92 @@ public class GameServer {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
 
                     if(message.equals(currentWord)){
-                        peer.getBasicRemote().sendText("Congratulations " + username + " you got it right!!!");
-                        peer.getBasicRemote().sendText("Correct word is " +  currentWord);
-                        peer.getBasicRemote().sendText("A new word will now be generated.");
-                        randomNum = randomWordList.generateNumber(wordCount);
-                        currentWord = randomWordList.generateWord(wordList, randomNum);
-                        currentDefinition = randomWordList.generateDefinition(wordList, randomNum);
+
+
+                            // only announce to those in the same room as me, excluding myself
+                        condition = true;
+                        randomNum = randomWordList.generateNumber(10);
 
                     }
-                    else{
-                        peer.getBasicRemote().sendText("The word inputted by " + username + " is wrong");
-                        peer.getBasicRemote().sendText("Please try again");
-                    }
+//                    else{
+//                        peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): The word <" + message + "> inputted by " + username + " is wrong\"}");
+//                        peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Please try again.\"}");
+//                    }
+
+//                            peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + message + " joined the game.\"}");
+//                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Congratulations " + username + " you got it right!\"}");
+//                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Correct word is " +  currentWord + "\"}");
+//                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): A new word will now be generated.\"}");
+//                    randomNum = randomWordList.generateNumber(10);
+//                    currentWord = randomWordList.generateWord(wordList, randomNum);
+//                    currentDefinition = randomWordList.generateDefinition(wordList, randomNum);
+//                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
+
+
+                }
+                if(condition == true)
+                {
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Congratulations " + username + " you got it right!\"}");
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Correct word is " +  currentWord + "\"}");
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): A new word will now be generated.\"}");
+//                    randomNum = randomWordList.generateNumber(10);
+                    currentWord = randomWordList.generateWord(wordList, randomNum);
+                    currentDefinition = randomWordList.generateDefinition(wordList, randomNum);
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
                 }
             }
-        }else{ //first message is their username
+            condition = false;
+//            if(condition == true)
+//            {
+//                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Congratulations " + username + " you got it right!\"}");
+//                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Correct word is " +  currentWord + "\"}");
+//                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): A new word will now be generated.\"}");
+//                randomNum = randomWordList.generateNumber(10);
+//                currentWord = randomWordList.generateWord(wordList, randomNum);
+//                currentDefinition = randomWordList.generateDefinition(wordList, randomNum);
+//                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
+//
+//            }
+
+        }
+        else if(!usernames.containsKey(userID))
+        { //first message is their username
             usernames.put(userID, message);
+            userStatus.put(userID, message);
+
+
+            roomPlayers.put(message, "no");
+
+//            for (Map.Entry<String, String> entry : roomPlayers.entrySet()) {
+//                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+//            }
 
             //
             if (Collections.frequency(roomList.values(), roomID) == 1) {
-                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Please wait for another play and click ready to play.\"}");
+                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "! Please wait for another play and click ready to play.\"}");
             } else {
-                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Click ready to play\"}");
+                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Click ready to play.\"}");
             }
 
             // broadcasting it to peers in the same room
             for(Session peer: session.getOpenSessions()){
                 // only announce to those in the same room as me, excluding myself
                 if((!peer.getId().equals(userID)) && (roomList.get(peer.getId()).equals(roomID))){
-                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + message + " joined the chat room.\"}");
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + message + " joined the game.\"}");
+                }
+            }
+        }
+        else
+        {
+            String username = usernames.get(userID);
+            userStatus.put(userID, "ready");
+            roomPlayers.put(username, "ready");
+            userStatus.put(userID, userStatus.get(userID) + "," + message);
+
+            for(Session peer: session.getOpenSessions()){
+                // only send my messages to those in the same room
+                if (roomList.get(peer.getId()).equals(roomID)) {
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
                 }
             }
         }
