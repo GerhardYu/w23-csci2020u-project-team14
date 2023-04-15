@@ -183,6 +183,12 @@ function enterRoom(){
             document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
         }
 
+        if(message.message.includes("left the game.") && message.message.includes("(Server):"))
+        {
+            alert("One user left, re-join room to start new game!")
+            location.reload();
+        }
+
         // handle message
 
     }
@@ -200,23 +206,6 @@ document.getElementById("input").addEventListener("keyup", function (event) {
 
     }
 });
-
-// // get player status <p> elements
-// let playerOneStatus = document.getElementById("player-one-status");
-// let playerTwoStatus = document.getElementById("player-two-status");
-//
-// // add an event listener that checks if both players ready
-// document.addEventListener("DOMContentLoaded", function() {
-//     let notGameStartDiv = document.getElementById("not_gameStart");
-//     let gameStartDiv = document.getElementById("gameStart");
-//
-//     if (!playerOneStatus.innerHTML.includes("Not") && !playerTwoStatus.innerHTML.includes("Not")) {
-//         console.log("game start")
-//         // if both players are ready, show the game start <div> and hide the not game start <div>
-//         notGameStartDiv.style.display = "none";
-//         gameStartDiv.style.display = "block";
-//     }
-// });
 
 
 // event listener when ready button is clicked

@@ -59,7 +59,7 @@ public class GameServer {
         roomList.put(session.getId(), roomID); //adding userID to a room
 
         System.out.println("Room joined ");
-        
+
         session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
     }
 

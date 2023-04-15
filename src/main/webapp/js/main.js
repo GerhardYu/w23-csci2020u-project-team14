@@ -183,6 +183,12 @@ function enterRoom(){
             document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
         }
 
+        if(message.message.includes("left the game.") && message.message.includes("(Server):"))
+        {
+            alert("One user left, re-join room to start new game!")
+            location.reload();
+        }
+
         // handle message
 
     }
