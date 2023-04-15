@@ -13,13 +13,11 @@ import java.util.Map.Entry;
 public class Word{
     private static Map<String, String> wordList = new HashMap<>();
     private int randNum = 0;
-    private int wordCount = 0;
-    private int generateWordCount = 0;
     private String randomWord;
     private String randomDefinition;
 
 
-    public Map<String, String> setWordList(){
+    public Map<String, String> setWordList(){ //words along with their definition put into a map
         wordList.put("jovial", "cheerful and friendly");
         wordList.put("puppy", "a baby dog");
         wordList.put("absurd", "unreasonable or illogical");
@@ -32,19 +30,13 @@ public class Word{
         wordList.put("stronghold", "a fortified place");
         return wordList;
     }
-    public int countWords(Map<String, String> currentList){
-        for(String word : currentList.values()){
-            wordCount++;
-        }
-        return wordCount;
-    }
-    public int generateNumber(int count){
+    public int generateNumber(int count){//generates a random number depending on how many is in the word map
         Random random = new Random();
         randNum = random.nextInt(count+1);
         return randNum;
     }
 
-    public String generateWord(Map<String, String> currentList, int randomNum){
+    public String generateWord(Map<String, String> currentList, int randomNum){//gets a word based on the random number
         int count = 0;
         for(Entry<String, String> word: currentList.entrySet()){
             if(count == randomNum){
@@ -55,7 +47,7 @@ public class Word{
         return randomWord;
     }
 
-    public String generateDefinition(Map<String, String> currentList, int randomNum){
+    public String generateDefinition(Map<String, String> currentList, int randomNum){//gets a definition based on the random number
         int count = 0;
         for(Entry<String, String> word: currentList.entrySet()){
             if(count == randomNum){
