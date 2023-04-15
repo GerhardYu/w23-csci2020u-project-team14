@@ -60,8 +60,6 @@ public class GameServer {
 
         System.out.println("Room joined ");
 
-        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome! Please wait for another player to join and click ready to play!.\"}");
-
         session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(GameWord): " + currentWord + "," + currentDefinition + "\"}");
     }
 
@@ -75,7 +73,7 @@ public class GameServer {
             usernames.remove(session.getId());
             // remove this user from the roomList
             roomList.remove(session.getId());
-
+            roomPlayers.remove(username);
 
             // broadcasting it to peers in the same room
             int countPeers = 0;
@@ -121,8 +119,7 @@ public class GameServer {
                 }
                 if(condition == true)
                 {
-                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Congratulations, " + username + " you guessed the correct word!\"}");
-                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Correct word is " +  currentWord + "\"}");
+                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Congratulations, " + username + " guessed the correct word!\"}");
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): A new word will now be generated.\"}");
                     currentWord = randomWordList.generateWord(wordList, randomNum); //gets a new random word
                     currentDefinition = randomWordList.generateDefinition(wordList, randomNum); //gets a new random definition
@@ -139,7 +136,7 @@ public class GameServer {
 
             roomPlayers.put(message, "no");
             if (Collections.frequency(roomList.values(), roomID) == 1) {
-                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "! Please wait for another play and click ready to play.\"}");
+                session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "! Please wait for another player and click ready to play.\"}");
             } else {
                 session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server ): Welcome, " + message + "! Click ready to play.\"}");
             }

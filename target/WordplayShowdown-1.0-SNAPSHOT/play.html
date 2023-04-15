@@ -29,23 +29,25 @@
         <!-- Add your site or application content here -->
         <div class="home-container" id="enterRequest">
             <div class="centered_home text-center">
-              <img src="img/ChatServerLogo2.png" alt="Logo">
-              <h1 class="mt-3">Create/Join Room</h1>
-          
-              <div class="form-group">
-                <label for="roomID">Room ID:</label>
-                <input type="text" class="form-control" id="roomID" placeholder="Enter Room ID">
-              </div>
-              <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter username">
-              </div>
-              <br>
-              <button class="btn btn-outline-secondary btn-lg btn-block mb-3" onclick="return enterRoom()" id="enterRequestButton">Play</button>
-            </div>
-          </div>
+                <img src="img/ChatServerLogo2.png" alt="Logo">
+                <h1 class="mt-3">Create/Join Room</h1>
 
-          <div id="room">
+                <div class="form-group">
+                    <label for="roomID">Room ID:</label>
+                    <input type="text" class="form-control" id="roomID" placeholder="Enter Room ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                </div>
+                <br>
+
+                <button class="btn btn-outline-secondary btn-lg btn-block mb-3" onclick="return enterRoom()" id="enterRequestButton">Play</button>
+            </div>
+        </div>
+
+        <div id="room">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="container-fluid">
@@ -75,6 +77,7 @@
             <div class="main-section">
                 <div class="container-fluid pt-4">
                     <div class="row text-center">
+
                         <!-- Left side -->
                         <div class="col-lg-4">
                             <div id="not_gameStart">
@@ -104,27 +107,24 @@
                             </div>
                         </div>
 
-
-                    <!-- Chat Box -->
-                    <div class="col-lg-8">
-                        <h2><span>Chat</span> <span id="chat_room_title"></span></h2>
-                        <div class="card h-70">
-                            <div class="card-body rounded">
-                                <div class="chat-box" id="chat_box">
-                                    <textarea title="Chat Log" id="log" readonly style="display: block; width: 100%; height: 400px; resize: none; margin: 0; padding: 0; border: 0;"></textarea>
-                                    <br>
-                                    <button type="button" class="btn btn-primary" id="ready-button">READY</button>
-                                    <input type="text" class="form-control d-none" id="input" placeholder="Enter your guess">
-
+                        <!-- Chat Box -->
+                        <div class="col-lg-8">
+                            <h2><span>Chat</span> <span id="chat_room_title"></span></h2>
+                            <div class="card h-70">
+                                <div class="card-body rounded">
+                                    <div class="chat-box" id="chat_box">
+                                        <textarea title="Chat Log" id="log" readonly style="display: block; width: 100%; height: 400px; resize: none; margin: 0; padding: 0; border: 0;"></textarea>
+                                        <br>
+                                        <button type="button" class="btn btn-primary" id="ready-button">READY</button>
+                                        <input type="text" class="form-control d-none" id="input" placeholder="Enter your guess">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
-
-
+        </div>
 
         <!-- Footer -->
         <footer class="text-center text-lg-start" id="footer">
