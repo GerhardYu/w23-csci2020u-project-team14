@@ -37,26 +37,13 @@ function players(username){
                     status.innerHTML = "Status: ready";
                 }
 
-                if(keys.length > 1)
-                {
-                    let player2 = document.getElementById("player-two-name");
-                    player2.innerHTML = "Player 2: " +  secondPlayer;
-                    // set the title attribute value of player
-                    player2.setAttribute("title", player.innerHTML);
-                }
-                else
-                {
-                    let player2 = document.getElementById("player-two-name");
-                    player2.innerHTML = "Player 2: ";
-                    // set the title attribute value of player
-                    player2.setAttribute("title", "Player 2");
-                    let status = document.getElementById("player-two-status");
-                    status.innerHTML = "Status: Not ready";
-                }
-
 
                 console.log("enter else, player 1 exist");
-
+                // set player 2
+                let player2 = document.getElementById("player-two-name");
+                player2.innerHTML = "Player 2: " +  secondPlayer;
+                // set the title attribute value of player
+                player2.setAttribute("title", player.innerHTML);
 
                 // get first player name
 
@@ -196,23 +183,6 @@ function enterRoom(){
             document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
         }
 
-        if(message.message.includes("left the game."))
-        {
-            players(username);
-            $('#input').addClass('d-none');
-            $('#ready-button').removeClass('d-none');
-
-            let playerLeftStatus = document.getElementById("player-one-status");
-            playerLeftStatus.innerHTML = "Status: Not ready";
-
-            let notGameStartDiv = document.getElementById("not_gameStart");
-            let gameStartDiv = document.getElementById("gameStart");
-
-            // if one user left, hide the game
-            notGameStartDiv.style.display = "block";
-            gameStartDiv.style.display = "none";
-        }
-
         // handle message
 
     }
@@ -230,6 +200,24 @@ document.getElementById("input").addEventListener("keyup", function (event) {
 
     }
 });
+
+// // get player status <p> elements
+// let playerOneStatus = document.getElementById("player-one-status");
+// let playerTwoStatus = document.getElementById("player-two-status");
+//
+// // add an event listener that checks if both players ready
+// document.addEventListener("DOMContentLoaded", function() {
+//     let notGameStartDiv = document.getElementById("not_gameStart");
+//     let gameStartDiv = document.getElementById("gameStart");
+//
+//     if (!playerOneStatus.innerHTML.includes("Not") && !playerTwoStatus.innerHTML.includes("Not")) {
+//         console.log("game start")
+//         // if both players are ready, show the game start <div> and hide the not game start <div>
+//         notGameStartDiv.style.display = "none";
+//         gameStartDiv.style.display = "block";
+//     }
+// });
+
 
 // event listener when ready button is clicked
 let readyButton = document.getElementById("ready-button"); // get the button element
